@@ -1,0 +1,76 @@
+#Django
+settings.py
+
+# Python bytecode:
+*.py[co]
+
+# Packaging files:
+*.egg*
+
+# Sphinx docs:
+build
+
+# Database files:
+*.db
+*.gz
+
+# Logs:
+*.log
+
+# Eclipse
+.project
+.pydevproject
+.settings
+
+#PyCharm
+.idea
+
+# Linux Editors
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
+*.swp
+*.swo
+
+# Mac
+.DS_Store
+._*
+
+# intelliJ PyCharm
+/epad/.idea
+./.idea
+
+# Folders
+# !! please note: static WILL BE INCLUDED in the push to git
+# static
+migrations/
+uploads/
+/epad/media
+/epad/local_settings.py
+/.Python
+/bin/
+/include/
+/lib/
+/djcelery/
+
+Vagrantfile
+.vagrant/
+
+#Sqlite
+db.sqlite*
+Scripts/
+pip-selfcheck.json
+tcl/
+
+#vscode editor
+typings.json
+jsconfig.json
+
+#django-nose test with coverage html
+/cover/
+.coverage
