@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from zion.views import trinity_view, zion_view
+from zion.views import trinity_view
 
 admin.autodiscover()
 
@@ -11,7 +11,5 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^zion-service/$', zion_view),
     url(r'^trinity-service/$', trinity_view),
 ]
-
