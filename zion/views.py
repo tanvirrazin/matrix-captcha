@@ -4,8 +4,10 @@ from django.core.cache import cache
 import requests
 
 def call_third_party():
-    response = requests.get('https://www.zipcodeapi.com/rest/kpZVAfW18keQsK9j8NGNFiJroM4EFyOZXOVx4SycdN3FxcYG0FtGXc7mZb0FKPFH/info.json/90210/degrees')
-    return JsonResponse(response.json())
+    # response = requests.get('https://www.zipcodeapi.com/rest/kwMXRk9wskTIzAY7mA2cB6HJbKHYurxPXjMPEVm6ffPPPNXboZoZ65JhPqfkSM9Q/info.json/90210/degrees')
+    # return JsonResponse(response.json())
+    response = requests.get('https://www.zipcodeapi.com/rest/kwMXRk9wskTIzAY7mA2cB6HJbKHYurxPXjMPEVm6ffPPPNXboZoZ65JhPqfkSM9Q/info.xml/90210/degrees', headers={'Content-Type': 'text/xml'})
+    return HttpResponse(response.content)
 
 def trinity_view(request):
     client_ip = request.META.get('REMOTE_ADDR')
