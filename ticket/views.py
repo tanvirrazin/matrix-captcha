@@ -26,7 +26,7 @@ def call_third_party():
     return HttpResponse(response.content)
 
 
-def validator_service_view(request):
+def ticket_service_view(request):
     client_ip = request.META.get('REMOTE_ADDR')
     matched_ips = cache.keys('{}_status'.format(client_ip))
 
@@ -44,6 +44,6 @@ def validator_service_view(request):
             return call_third_party()
 
         else:
-            template = loader.get_template('validator_template.html')
+            template = loader.get_template('ticket_template.html')
             context = {'name': request.GET.get('name', '')}
             return HttpResponse(template.render(context, request))
