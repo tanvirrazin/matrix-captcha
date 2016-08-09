@@ -9,7 +9,7 @@ def call_third_party():
     response = requests.get('https://www.zipcodeapi.com/rest/kwMXRk9wskTIzAY7mA2cB6HJbKHYurxPXjMPEVm6ffPPPNXboZoZ65JhPqfkSM9Q/info.xml/90210/degrees', headers={'Content-Type': 'text/xml'})
     return HttpResponse(response.content)
 
-def trinity_view(request):
+def validator_service_view(request):
     client_ip = request.META.get('REMOTE_ADDR')
     matched_ips = cache.keys('{}_status'.format(client_ip))
 
@@ -27,6 +27,6 @@ def trinity_view(request):
             return call_third_party()
 
         else:
-            template = loader.get_template('trinity_template.html')
+            template = loader.get_template('validator_template.html')
             context = {'name': request.GET.get('name', '')}
             return HttpResponse(template.render(context, request))
