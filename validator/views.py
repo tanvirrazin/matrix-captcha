@@ -6,8 +6,25 @@ import requests
 def call_third_party():
     # response = requests.get('https://www.zipcodeapi.com/rest/kwMXRk9wskTIzAY7mA2cB6HJbKHYurxPXjMPEVm6ffPPPNXboZoZ65JhPqfkSM9Q/info.json/90210/degrees')
     # return JsonResponse(response.json())
-    response = requests.get('https://www.zipcodeapi.com/rest/kwMXRk9wskTIzAY7mA2cB6HJbKHYurxPXjMPEVm6ffPPPNXboZoZ65JhPqfkSM9Q/info.xml/90210/degrees', headers={'Content-Type': 'text/xml'})
+    # response = requests.get('https://www.zipcodeapi.com/rest/kwMXRk9wskTIzAY7mA2cB6HJbKHYurxPXjMPEVm6ffPPPNXboZoZ65JhPqfkSM9Q/info.xml/90210/degrees', headers={'Content-Type': 'text/xml'})
+    # return HttpResponse(response.content)
+
+    headers = {'Content-Type': 'text/xml'}
+    url = 'http://service-env.us-east-1.elasticbeanstalk.com/simplewebservice?wsdl'
+    body = """<?xml version="1.0" encoding="UTF-8"?>
+              <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://my.org/ns/">
+                  <SOAP-ENV:Body>
+                      <ns1:booking>
+                          <passengername>mehjabin</passengername>
+                              <no_of_seats>0</no_of_seats>
+                              <origin>?</origin>
+                              <destination>?</destination>
+                      </ns1:booking>
+                  </SOAP-ENV:Body>
+              </SOAP-ENV:Envelope>"""
+    response = requests.post(url, data=body, headers=headers)
     return HttpResponse(response.content)
+
 
 def validator_service_view(request):
     client_ip = request.META.get('REMOTE_ADDR')
