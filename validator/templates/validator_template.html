@@ -5,8 +5,8 @@
 </head>
 <body>
 
-<form method="post" action="/trinity-service/{% if name != '' %}?name={{ name }}{% endif %}">{% csrf_token %}
-    <div class="g-recaptcha" data-sitekey="6LfU9CYTAAAAAGZHVhmHPa9WznVZkdb9ZOdMhz4Q"></div>
+<form method="post" action="/validator-service/{% if name != '' %}?name={{ name }}{% endif %}">{% csrf_token %}
+    <div class="g-recaptcha" data-sitekey="6LdNMCcTAAAAAEhViVJwErOk8lWwfkyrZU14ADyR"></div>
     <button type="submit">Submit</button>
 </form>
 
