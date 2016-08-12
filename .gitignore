@@ -47,8 +47,7 @@ tramp
 # static
 migrations/
 uploads/
-/epad/media
-/epad/local_settings.py
+/matrix_captcha/local_settings.py
 /.Python
 /bin/
 /include/

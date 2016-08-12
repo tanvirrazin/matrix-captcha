@@ -5,8 +5,8 @@
 </head>
 <body>
 
-<form method="post" action="/validator-service/{% if name != '' %}?name={{ name }}{% endif %}">{% csrf_token %}
-    <div class="g-recaptcha" data-sitekey="6LdNMCcTAAAAAEhViVJwErOk8lWwfkyrZU14ADyR"></div>
+<form method="post" action="/ticket-service/">{% csrf_token %}
+    <div class="g-recaptcha" data-sitekey="{{ site_key }}"></div>
     <button type="submit">Submit</button>
 </form>
 

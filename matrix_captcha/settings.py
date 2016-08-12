@@ -132,3 +132,11 @@ CACHES = {
         }
     }
 }
+
+BACKEND_URL = 'http://service-env.us-east-1.elasticbeanstalk.com/simplewebservice?wsdl'
+RECAPTCHA_SITEKEY = '6LdNMCcTAAAAAEhViVJwErOk8lWwfkyrZU14ADyR'
+
+try:
+    from local_settings import *
+except Exception:
+    pass

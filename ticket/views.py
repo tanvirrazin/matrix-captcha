@@ -1,38 +1,42 @@
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
+from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
+from django.conf import settings
 import requests
 
-def call_third_party():
-    # response = requests.get('https://www.zipcodeapi.com/rest/kwMXRk9wskTIzAY7mA2cB6HJbKHYurxPXjMPEVm6ffPPPNXboZoZ65JhPqfkSM9Q/info.json/90210/degrees')
-    # return JsonResponse(response.json())
-    # response = requests.get('https://www.zipcodeapi.com/rest/kwMXRk9wskTIzAY7mA2cB6HJbKHYurxPXjMPEVm6ffPPPNXboZoZ65JhPqfkSM9Q/info.xml/90210/degrees', headers={'Content-Type': 'text/xml'})
-    # return HttpResponse(response.content)
 
+def build_soap_request_body(data):
+    data_string = ""
+    for key, value in data.items():
+        new_key_value_part = ''
+        data_string = "{}<{}>{}</{}>".format(data_string, key, value, key)
+    return '<?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://my.org/ns/"><SOAP-ENV:Body><ns1:booking>{}</ns1:booking></SOAP-ENV:Body></SOAP-ENV:Envelope>'.format(data_string)
+
+
+def call_third_party(method, data):
     headers = {'Content-Type': 'text/xml'}
-    url = 'http://service-env.us-east-1.elasticbeanstalk.com/simplewebservice?wsdl'
-    body = """<?xml version="1.0" encoding="UTF-8"?>
-              <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://my.org/ns/">
-                  <SOAP-ENV:Body>
-                      <ns1:booking>
-                          <passengername>mehjabin</passengername>
-                              <no_of_seats>0</no_of_seats>
-                              <origin>?</origin>
-                              <destination>?</destination>
-                      </ns1:booking>
-                  </SOAP-ENV:Body>
-              </SOAP-ENV:Envelope>"""
-    response = requests.post(url, data=body, headers=headers)
+    url = settings.BACKEND_URL
+    request_body = build_soap_request_body(data)
+
+    response = requests.post(url, data=request_body, headers=headers)
+
     return HttpResponse(response.content)
 
 
+@csrf_exempt
 def ticket_service_view(request):
+    if request.method == 'POST':
+        method, data = 'post', request.POST
+    else:
+        method, data = 'get', request.GET
+
     client_ip = request.META.get('REMOTE_ADDR')
     matched_ips = cache.keys('{}_status'.format(client_ip))
 
     if len(matched_ips) > 0:
         if cache.get('{}_status'.format(client_ip)) == 'w':
-            return call_third_party()
+            return call_third_party(method, data)
         else:
             return JsonResponse({'detail': 'Permission Denied.'})
 
@@ -41,9 +45,9 @@ def ticket_service_view(request):
 
         if len(g_recaptcha_response) > 0 and g_recaptcha_response[0] != '':
             cache.set('{}_status'.format(client_ip), 'w')
-            return call_third_party()
+            return HttpResponse('You are allowed to call the service now.')
 
         else:
             template = loader.get_template('ticket_template.html')
-            context = {'name': request.GET.get('name', '')}
+            context = {'site_key': settings.RECAPTCHA_SITEKEY}
             return HttpResponse(template.render(context, request))

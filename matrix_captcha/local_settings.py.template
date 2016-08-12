@@ -1,0 +1,12 @@
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://soap-redis.3kngug.0001.use1.cache.amazonaws.com:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+BACKEND_URL = 'http://service-env.us-east-1.elasticbeanstalk.com/simplewebservice?wsdl'
+RECAPTCHA_SITEKEY = '6LdNMCcTAAAAAEhViVJwErOk8lWwfkyrZU14ADyR'
