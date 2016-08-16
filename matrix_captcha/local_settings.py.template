@@ -10,3 +10,6 @@ CACHES = {
 
 BACKEND_URL = 'http://service-env.us-east-1.elasticbeanstalk.com/simplewebservice?wsdl'
 RECAPTCHA_SITEKEY = '6LdNMCcTAAAAAEhViVJwErOk8lWwfkyrZU14ADyR'
+RECAPTCHA_SECRETKEY = '6LdNMCcTAAAAACg0pwlhqXPPZiGxb-WR-S_QuNw5'
+
+MAX_UNATHORISED_REQUEST_NUM = 5
