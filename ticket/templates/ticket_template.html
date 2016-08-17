@@ -5,8 +5,11 @@
 </head>
 <body>
 
-<form method="post" action="/ticket-service/">{% csrf_token %}
+<form method="post" action="">{% csrf_token %}
     <div class="g-recaptcha" data-sitekey="{{ site_key }}"></div>
+    {% for key, value in data.items %}
+    <input name="{{ key }}" type="hidden" value="{{ value }}" />
+    {% endfor %}
     <button type="submit">Submit</button>
 </form>
 
