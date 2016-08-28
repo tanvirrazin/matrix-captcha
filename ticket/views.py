@@ -4,6 +4,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.cache import cache
 from django.conf import settings
 import requests
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def check_captcha(captcha_response, remote_ip):
@@ -44,6 +47,7 @@ def ticket_service_view(request):
         method, data = 'get', request.GET
 
     client_ip = request.META.get('REMOTE_ADDR')
+    logger.info("Request from {}".format(client_ip))
     matched_ips = cache.keys('{}_status'.format(client_ip))
 
     if len(matched_ips) > 0:

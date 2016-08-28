@@ -136,6 +136,36 @@ CACHES = {
 BACKEND_URL = 'http://service-env.us-east-1.elasticbeanstalk.com/simplewebservice?wsdl'
 RECAPTCHA_SITEKEY = '6LdNMCcTAAAAAEhViVJwErOk8lWwfkyrZU14ADyR'
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'ticket.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers':['file'],
+            'propagate': True,
+            'level': 'INFO',
+        },
+        'ticket': {
+            'handlers': ['file'],
+            'level': 'INFO',
+        }
+    }
+}
+
 try:
     from local_settings import *
 except Exception:
